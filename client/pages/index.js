@@ -1,8 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react';
+
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [data, setData] = useState();
+  useEffect(() => {
+    fetch('http://localhost:5000/api')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data.name);
+      });
+    // .then((data) => console.log(data));
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +28,7 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <h2 className="text-3xl underline mt-12">{data}</h2>
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -52,18 +66,16 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
+          <FontAwesomeIcon icon="fa-solid fa-heart" />
         </a>
-      </footer>
+      </footer> */}
     </div>
-  )
+  );
 }
